@@ -1,5 +1,14 @@
 # bugs-to-reproduce
 This a list of bugs that have been reproduced or some pending bugs that can be hopefully reproduced after further studying. Every bug is described in a docker container.
+## install docker and start docker
+We utilize docker container to reproduce bugs. To install docker on ubuntu(or other linux system alike),
+```shell
+sudo apt-get install docker-engine -y
+```
+To start docker engine,
+```shell
+sudo service docker start
+```
 ## build container
 For each bug in the list,
 ```shell
