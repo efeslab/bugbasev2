@@ -1,3 +1,4 @@
+# patched commit d35334f368817a77a6bd1f33c6a5676b2c402c02
 # segfault (null pointer dereference) during lru command handling
 FROM debian:latest
 RUN apt-get update && apt-get install -y gcc libc6-dev make

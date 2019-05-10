@@ -1,4 +1,4 @@
-# issue 229 metadump segfault
+# issue 469
 FROM debian:latest
 RUN apt-get update && apt-get install -y gcc libc6-dev make
 RUN apt-get update && apt-get install -y wget
@@ -14,7 +14,7 @@ RUN ./configure && make && make test && make install
 RUN apt-get update && apt-get install -y telnet
 RUN apt-get update && apt-get install -y procps
 RUN apt-get update && apt-get install -y expect
-COPY ./telnet.sh /tmp/telnet.sh
+RUN apt-get update && apt-get install -y openjdk-8-jdk
+COPY ./MemcachedCounter.java /tmp/MemcachedCounter.java	
 WORKDIR /tmp
-RUN chmod +x telnet.sh
-CMD memcached -p 11211 -u root -l 127.0.0.1 -m 56253 -C -c 100000 -o slab_chunk_max=524288 -o slab_reassign,slab_automove,lru_maintainer,lru_crawler,hash_algorithm=murmur3 -I 20m & /bin/bash
+CMD memcached -p 11211 -u root -l 127.0.0.1 & /bin/bash
