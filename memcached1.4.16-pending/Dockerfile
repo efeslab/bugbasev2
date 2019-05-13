@@ -17,4 +17,4 @@ COPY ./lib /tmp/lib
 RUN chmod +x issue_192.t
 WORKDIR /tmp/memcached-$version/t
 RUN chmod +x issue_192.t
-CMD ./issue_192.t
+CMD prove ./issue_192.t
