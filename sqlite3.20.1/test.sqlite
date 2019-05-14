@@ -1,2 +1,0 @@
-CREATE TABLE t1(x);
-SELECT * FROM t1 WHERE 1 IN (SELECT value FROM json_each(x));

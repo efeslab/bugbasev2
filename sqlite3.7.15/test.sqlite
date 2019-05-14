@@ -1,4 +1,0 @@
-CREATE TABLE name (
-   type INTEGER,
-   path text PRIMARY KEY);
-SELECT (name.type = 0) AS container FROM Name name WHERE name.type = 0 or container ORDER BY name.path;
