@@ -1,6 +1,3 @@
-# patch not specifies
-# ticket 235
-# worker process segmentation fault
 FROM debian:latest
 RUN apt-get update && apt-get install -y build-essential perl
 RUN apt-get update && apt-get install -y gcc libc6-dev make gdb
@@ -33,4 +30,4 @@ RUN make && make install
 COPY ./nginx.conf /etc/nginx/conf/nginx.conf
 WORKDIR /etc/nginx
 RUN /usr/local/ssl/bin/openssl req -nodes -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'
-CMD /etc/nginx/sbin/nginx && /usr/local/ssl/bin/openssl s_client -connect 127.0.0.1:443 -no_ticket -servername test2 && cat /etc/nginx/logs/error.log
+CMD /etc/nginx/sbin/nginx && /usr/local/ssl/bin/openssl s_client -connect 127.0.0.1:443 -no_ticket -servername test2 && cat /etc/nginx/logs/error.log 
