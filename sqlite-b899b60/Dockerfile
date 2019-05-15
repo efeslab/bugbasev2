@@ -10,4 +10,5 @@ COPY test.sqlite /tmp/test.sqlite
 WORKDIR /tmp/SQLite-$checkin
 RUN ./configure && make && make install
 WORKDIR /tmp
+RUN apt-get update && apt-get install -y vim
 CMD sqlite3 < test.sqlite
