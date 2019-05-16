@@ -1,6 +1,3 @@
-# patch not specifies
-# ticket 1263
-# worker process segmentation fault
 FROM debian:latest
 RUN apt-get update && apt-get install -y gcc libc6-dev make gdb
 RUN apt-get update && apt-get install -y linux-headers-$(dpkg --print-architecture)
