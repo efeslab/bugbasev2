@@ -1,0 +1,1 @@
+docker run --cap-add sys_ptrace --rm  -it -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name bug87984 mysql:5.7 --log-isam=myisam.log --myisam_use_mmap=1

@@ -1,0 +1,1 @@
+mysqlslap -uroot -psecret --concurrency=3 --create-schema=test --no-drop --number-of-queries=1000 --query="delete from tu where a = 9999 and b = 'xxxx'"
