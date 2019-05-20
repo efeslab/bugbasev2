@@ -1,0 +1,1 @@
+with cte as (select 1 union select 2 union select 3) select 1;
