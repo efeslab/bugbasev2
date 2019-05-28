@@ -1,0 +1,1 @@
+mysql -uroot -psecret -e "CREATE DATABASE test;USE test;CREATE TABLE animals (grp ENUM('fish','mammal','bird') NOT NULL, id MEDIUMINT NOT NULL AUTO_INCREMENT, name CHAR(30) NOT NULL, PRIMARY KEY (grp,id)) ENGINE=MyISAM;INSERT INTO animals VALUES('fish', 1, 'one');"

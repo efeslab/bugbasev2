@@ -1,0 +1,21 @@
+#!/bin/bash
+mysql -uroot -psecret << PREPARE
+CREATE DATABASE test;
+USE test;
+DROP TABLE IF EXISTS t1;
+DROP TABLE IF EXISTS t1_hist;
+DROP TABLE IF EXISTS t1_trig;
+CREATE TABLE t1 (id INT PRIMARY KEY AUTO_INCREMENT, updated_at DATETIME);
+CREATE TABLE t1_hist (id INT PRIMARY KEY AUTO_INCREMENT, t1_id INT, updated_at DATETIME, KEY (t1_id));
+CREATE TABLE t1_trig (id INT PRIMARY KEY AUTO_INCREMENT);
+INSERT INTO t1 (updated_at) VALUES (NOW());
+INSERT INTO t1_hist (t1_id, updated_at) SELECT id, updated_at FROM t1 WHERE id = 1;
+DROP TRIGGER IF EXISTS t1_trig_ins;
+DELIMITER //
+CREATE TRIGGER t1_trig_ins AFTER INSERT ON t1_trig FOR EACH ROW
+BEGIN
+    INSERT INTO t1_hist (t1_id, updated_at) SELECT id, updated_at FROM t1 WHERE id = 1;
+END
+//
+DELIMITER ;
+PREPARE

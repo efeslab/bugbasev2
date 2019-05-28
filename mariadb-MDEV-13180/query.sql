@@ -1,0 +1,9 @@
+CREATE DATABASE test;
+USE test;
+CREATE TABLE t1 (i1 int);
+INSERT INTO t1 VALUES (1);
+ 
+CREATE TABLE t2 (i int);
+INSERT INTO t2 VALUES (2);
+ 
+SELECT 1 FROM t1 left JOIN t2 b ON b.i = (SELECT MAX(b.i) FROM `t2`);

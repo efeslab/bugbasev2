@@ -1,0 +1,1 @@
+docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=1 -it --rm zry1998530/mariadb13317

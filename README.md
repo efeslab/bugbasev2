@@ -18,10 +18,20 @@ Each bug directory should have a Dockerfile in it, with which we could build doc
 ```shell
 docker image build -t [bug directory or anything you want] .
 ```
+Note: For mariadb bugs, inside the directory should have a build.sh in it, so we can just type 
+```shell
+bash build.sh
+```
+to build it with a tag named maria[bug number].
 ## reproduce bug using the container just built
 ```shell
 docker run [bug directory]
 ```
+Note: For mariadb bugs, inside the directory should have a run.sh, simply type 
+```shell
+bash run.sh
+```
+in the terminal will be able to reproduce that bug.
 ## expected output
 After we run the container of bug, we should see some error message from the shell we just execute `docker run`. For now, since those bugs are very trivial, we are expected to get `segmentation fault`.
 ## pending bugs

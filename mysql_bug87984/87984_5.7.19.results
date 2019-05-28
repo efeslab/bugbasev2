@@ -1,0 +1,326 @@
+
+
+[umshastr@hod03]/export/umesh/server/binaries/GABuilds/mysql-5.7.19: bin/mysqld --initialize-insecure --basedir=$PWD --datadir=$PWD/87794 --log-isam=myisam.log --myisam_use_mmap=1
+2017-10-05T06:12:33.059620Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2017-10-05T06:12:33.307121Z 0 [Warning] InnoDB: New log files created, LSN=45790
+2017-10-05T06:12:33.376647Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+2017-10-05T06:12:33.431592Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 2d0f391a-a994-11e7-8ad2-0010e05f3e06.
+2017-10-05T06:12:33.432030Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+2017-10-05T06:12:33.432438Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+
+^^ hangs
+
+
+[umshastr@hod03]~/bugs: ./pt-pmp --pid=29840
+Thu Oct  5 08:13:34 CEST 2017
+     10 __io_getevents_0_4(libaio.so.1),LinuxAIOHandler::collect(os0file.cc:2500),LinuxAIOHandler::poll(os0file.cc:2646),os_aio_linux_handler(os0file.cc:2702),os_aio_handler(os0file.cc:2702),fil_aio_wait(fil0fil.cc:5835),io_handler_thread(srv0start.cc:311),start_thread(libpthread.so.0),clone(libc.so.6)
+      3 pthread_cond_wait,wait(os0event.cc:165),os_event::wait_low(os0event.cc:165),srv_worker_thread(srv0srv.cc:2520),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 sigwait(libpthread.so.0),signal_hand(mysqld.cc:2101),pfs_spawn_thread(pfs.cc:2188),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 sigwaitinfo(libc.so.6),timer_notify_thread_func(posix_timers.c:77),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_join(libpthread.so.0),bootstrap(bootstrap.cc:367),mysqld_main(mysqld.cc:4945),__libc_start_main(libc.so.6),_start
+      1 pthread_cond_wait,wait(os0event.cc:165),os_event::wait_low(os0event.cc:165),srv_purge_coordinator_suspend(srv0srv.cc:2676),srv_purge_coordinator_thread(srv0srv.cc:2676),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_wait,wait(os0event.cc:165),os_event::wait_low(os0event.cc:165),buf_resize_thread(buf0buf.cc:3016),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_wait,wait(os0event.cc:165),os_event::wait_low(os0event.cc:165),buf_dump_thread(buf0dump.cc:782),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_timedwait,os_event::timed_wait(os0event.cc:285),os_event::wait_time_low(os0event.cc:412),srv_monitor_thread(srv0srv.cc:1585),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_timedwait,os_event::timed_wait(os0event.cc:285),os_event::wait_time_low(os0event.cc:412),srv_error_monitor_thread(srv0srv.cc:1751),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_timedwait,os_event::timed_wait(os0event.cc:285),os_event::wait_time_low(os0event.cc:412),pc_sleep_if_needed(buf0flu.cc:2690),buf_flush_page_cleaner_coordinator(buf0flu.cc:2690),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_timedwait,os_event::timed_wait(os0event.cc:285),os_event::wait_time_low(os0event.cc:412),lock_wait_timeout_thread(lock0wait.cc:501),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_timedwait,os_event::timed_wait(os0event.cc:285),os_event::wait_time_low(os0event.cc:412),ib_wqueue_timedwait(ut0wqueue.cc:160),fts_optimize_thread(fts0opt.cc:3040),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 pthread_cond_timedwait,os_event::timed_wait(os0event.cc:285),os_event::wait_time_low(os0event.cc:412),dict_stats_thread(dict0stats_bg.cc:428),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 nanosleep(libpthread.so.0),os_thread_sleep(os0thread.cc:279),srv_master_sleep(srv0srv.cc:2330),srv_master_thread(srv0srv.cc:2330),start_thread(libpthread.so.0),clone(libc.so.6)
+      1 __lll_lock_wait(libpthread.so.0),_L_lock_791(libpthread.so.0),pthread_mutex_lock(libpthread.so.0),native_mutex_lock(thr_mutex.h:84),my_mutex_lock(thr_mutex.h:84),inline_mysql_mutex_lock(thr_mutex.h:84),_myisam_log_command(thr_mutex.h:84),mi_extra(mi_extra.c:338),mi_open_share(mi_open.c:571),ha_myisam::open(ha_myisam.cc:763),handler::ha_open(handler.cc:2758),open_table_from_share(table.cc:3353),open_table(sql_base.cc:3523),open_and_process_table(sql_base.cc:5109),open_tables(sql_base.cc:5109),open_and_lock_tables(sql_base.cc:6440),open_and_lock_tables(sql_base.h:479),mysql_execute_command(sql_base.h:479),mysql_parse(sql_parse.cc:5574),handle_bootstrap_impl(bootstrap.cc:254),::handle_bootstrap(bootstrap.cc:325),pfs_spawn_thread(pfs.cc:2188),start_thread(libpthread.so.0),clone(libc.so.6)
+[umshastr@hod03]~/bugs:
+[umshastr@hod03]~/bugs: gdb --batch -ex 'set pagination off' -ex 'thr app all bt' -ex detach /export/umesh/server/binaries/GABuilds/mysql-5.7.19/bin/mysqld -p 29840
+[New LWP 29866]
+[New LWP 29865]
+[New LWP 29864]
+[New LWP 29863]
+[New LWP 29862]
+[New LWP 29861]
+[New LWP 29860]
+[New LWP 29859]
+[New LWP 29858]
+[New LWP 29857]
+[New LWP 29856]
+[New LWP 29855]
+[New LWP 29854]
+[New LWP 29853]
+[New LWP 29852]
+[New LWP 29851]
+[New LWP 29850]
+[New LWP 29849]
+[New LWP 29848]
+[New LWP 29847]
+[New LWP 29846]
+[New LWP 29845]
+[New LWP 29844]
+[New LWP 29843]
+[New LWP 29842]
+[New LWP 29841]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+0x00007f1515feaf27 in pthread_join () from /lib64/libpthread.so.0
+
+Thread 27 (Thread 0x7f15147af700 (LWP 29841)):
+#0  0x00007f15149e97da in sigwaitinfo () from /lib64/libc.so.6
+#1  0x0000000000f4d06b in timer_notify_thread_func (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/mysys/posix_timers.c:77
+#2  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#3  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 26 (Thread 0x7f150863c700 (LWP 29842)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f150863be10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f150863be10, m1=0x7f150863bec8, m2=0x7f150863bec0, request=0x7f150863be90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f150863be90, m2=0x7f150863bec0, m1=0x7f150863bec8, global_segment=0) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=0, m1=0x7f150863bec8, m2=0x7f150863bec0, request=0x7f150863be90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=0) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 25 (Thread 0x7f1507c3b700 (LWP 29843)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1507c3ae10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1507c3ae10, m1=0x7f1507c3aec8, m2=0x7f1507c3aec0, request=0x7f1507c3ae90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1507c3ae90, m2=0x7f1507c3aec0, m1=0x7f1507c3aec8, global_segment=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=1, m1=0x7f1507c3aec8, m2=0x7f1507c3aec0, request=0x7f1507c3ae90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 24 (Thread 0x7f150723a700 (LWP 29844)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1507239e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1507239e10, m1=0x7f1507239ec8, m2=0x7f1507239ec0, request=0x7f1507239e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1507239e90, m2=0x7f1507239ec0, m1=0x7f1507239ec8, global_segment=2) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=2, m1=0x7f1507239ec8, m2=0x7f1507239ec0, request=0x7f1507239e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=2) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 23 (Thread 0x7f1506839700 (LWP 29845)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1506838e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1506838e10, m1=0x7f1506838ec8, m2=0x7f1506838ec0, request=0x7f1506838e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1506838e90, m2=0x7f1506838ec0, m1=0x7f1506838ec8, global_segment=3) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=3, m1=0x7f1506838ec8, m2=0x7f1506838ec0, request=0x7f1506838e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=3) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 22 (Thread 0x7f1505e38700 (LWP 29846)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1505e37e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1505e37e10, m1=0x7f1505e37ec8, m2=0x7f1505e37ec0, request=0x7f1505e37e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1505e37e90, m2=0x7f1505e37ec0, m1=0x7f1505e37ec8, global_segment=4) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=4, m1=0x7f1505e37ec8, m2=0x7f1505e37ec0, request=0x7f1505e37e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=4) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 21 (Thread 0x7f1505437700 (LWP 29847)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1505436e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1505436e10, m1=0x7f1505436ec8, m2=0x7f1505436ec0, request=0x7f1505436e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1505436e90, m2=0x7f1505436ec0, m1=0x7f1505436ec8, global_segment=5) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=5, m1=0x7f1505436ec8, m2=0x7f1505436ec0, request=0x7f1505436e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=5) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 20 (Thread 0x7f1504a36700 (LWP 29848)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1504a35e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1504a35e10, m1=0x7f1504a35ec8, m2=0x7f1504a35ec0, request=0x7f1504a35e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1504a35e90, m2=0x7f1504a35ec0, m1=0x7f1504a35ec8, global_segment=6) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=6, m1=0x7f1504a35ec8, m2=0x7f1504a35ec0, request=0x7f1504a35e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=6) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 19 (Thread 0x7f1504035700 (LWP 29849)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1504034e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1504034e10, m1=0x7f1504034ec8, m2=0x7f1504034ec0, request=0x7f1504034e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1504034e90, m2=0x7f1504034ec0, m1=0x7f1504034ec8, global_segment=7) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=7, m1=0x7f1504034ec8, m2=0x7f1504034ec0, request=0x7f1504034e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=7) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 18 (Thread 0x7f1503634700 (LWP 29850)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1503633e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1503633e10, m1=0x7f1503633ec8, m2=0x7f1503633ec0, request=0x7f1503633e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1503633e90, m2=0x7f1503633ec0, m1=0x7f1503633ec8, global_segment=8) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=8, m1=0x7f1503633ec8, m2=0x7f1503633ec0, request=0x7f1503633e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=8) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 17 (Thread 0x7f1502c33700 (LWP 29851)):
+#0  0x00007f1515de0644 in __io_getevents_0_4 () from /lib64/libaio.so.1
+#1  0x00000000010ae1b4 in LinuxAIOHandler::collect (this=0x7f1502c32e10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2500
+#2  0x00000000010af8d4 in LinuxAIOHandler::poll (this=0x7f1502c32e10, m1=0x7f1502c32ec8, m2=0x7f1502c32ec0, request=0x7f1502c32e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2646
+#3  0x00000000010b12fc in os_aio_linux_handler (request=0x7f1502c32e90, m2=0x7f1502c32ec0, m1=0x7f1502c32ec8, global_segment=9) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:2702
+#4  os_aio_handler (segment=9, m1=0x7f1502c32ec8, m2=0x7f1502c32ec0, request=0x7f1502c32e90) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0file.cc:6259
+#5  0x000000000124618d in fil_aio_wait (segment=9) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fil/fil0fil.cc:5835
+#6  0x0000000001153300 in io_handler_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0start.cc:311
+#7  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 16 (Thread 0x7f1502232700 (LWP 29852)):
+#0  0x00007f1515fedab2 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b62de in os_event::timed_wait (this=<optimized out>, abstime=0x7f15022319e0) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:285
+#2  0x00000000010b65fe in os_event::wait_time_low (this=0x20ec7c8, time_in_usec=<optimized out>, reset_sig_count=2) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:412
+#3  0x00000000011f5873 in pc_sleep_if_needed (sig_count=2, next_loop_time=1507184108228) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/buf/buf0flu.cc:2690
+#4  buf_flush_page_cleaner_coordinator (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/buf/buf0flu.cc:3191
+#5  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#6  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 15 (Thread 0x7f1501831700 (LWP 29853)):
+#0  0x00007f1515fedab2 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b62de in os_event::timed_wait (this=<optimized out>, abstime=0x7f1501830df0) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:285
+#2  0x00000000010b65fe in os_event::wait_time_low (this=0x277c6f8, time_in_usec=<optimized out>, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:412
+#3  0x000000000108d454 in lock_wait_timeout_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/lock/lock0wait.cc:501
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 14 (Thread 0x7f1500e30700 (LWP 29854)):
+#0  0x00007f1515fedab2 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b62de in os_event::timed_wait (this=<optimized out>, abstime=0x7f1500e2fb00) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:285
+#2  0x00000000010b65fe in os_event::wait_time_low (this=0x20ec618, time_in_usec=<optimized out>, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:412
+#3  0x00000000011511c5 in srv_error_monitor_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:1751
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 13 (Thread 0x7f14fbfff700 (LWP 29855)):
+#0  0x00007f1515fedab2 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b62de in os_event::timed_wait (this=<optimized out>, abstime=0x7f14fbffee70) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:285
+#2  0x00000000010b65fe in os_event::wait_time_low (this=0x20ec6a8, time_in_usec=<optimized out>, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:412
+#3  0x0000000001150255 in srv_monitor_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:1585
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 12 (Thread 0x7f14fb5fe700 (LWP 29856)):
+#0  0x00007f1515ff099d in nanosleep () from /lib64/libpthread.so.0
+#1  0x00000000010b6890 in os_thread_sleep (tm=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0thread.cc:279
+#2  0x000000000115087b in srv_master_sleep () at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2330
+#3  srv_master_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2377
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 11 (Thread 0x7f14fabfd700 (LWP 29857)):
+#0  0x00007f1515fed705 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b612b in wait (this=0x20ec3d8) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:165
+#2  os_event::wait_low (this=0x20ec3d8, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:335
+#3  0x000000000115225d in srv_purge_coordinator_suspend (rseg_history_len=0, slot=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2676
+#4  srv_purge_coordinator_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2792
+#5  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#6  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 10 (Thread 0x7f14fa1fc700 (LWP 29858)):
+#0  0x00007f1515fed705 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b612b in wait (this=0x20ec4f8) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:165
+#2  os_event::wait_low (this=0x20ec4f8, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:335
+#3  0x000000000114fb4e in srv_worker_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2520
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 9 (Thread 0x7f14f97fb700 (LWP 29859)):
+#0  0x00007f1515fed705 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b612b in wait (this=0x20ec588) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:165
+#2  os_event::wait_low (this=0x20ec588, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:335
+#3  0x000000000114fb4e in srv_worker_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2520
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 8 (Thread 0x7f14f8dfa700 (LWP 29860)):
+#0  0x00007f1515fed705 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b612b in wait (this=0x20ec468) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:165
+#2  os_event::wait_low (this=0x20ec468, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:335
+#3  0x000000000114fb4e in srv_worker_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/srv/srv0srv.cc:2520
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 7 (Thread 0x7f14e7fff700 (LWP 29861)):
+#0  0x00007f1515fed705 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b612b in wait (this=0x20ec738) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:165
+#2  os_event::wait_low (this=0x20ec738, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:335
+#3  0x00000000011ef11c in buf_dump_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/buf/buf0dump.cc:782
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 6 (Thread 0x7f14e75fe700 (LWP 29862)):
+#0  0x00007f1515fedab2 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b62de in os_event::timed_wait (this=<optimized out>, abstime=0x7f14e75fde10) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:285
+#2  0x00000000010b65fe in os_event::wait_time_low (this=0x277fad8, time_in_usec=<optimized out>, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:412
+#3  0x0000000001238247 in dict_stats_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/dict/dict0stats_bg.cc:428
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 5 (Thread 0x7f14e6bfd700 (LWP 29863)):
+#0  0x00007f1515fedab2 in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b62de in os_event::timed_wait (this=<optimized out>, abstime=0x7f14e6bfc990) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:285
+#2  0x00000000010b65fe in os_event::wait_time_low (this=0x2a61018, time_in_usec=<optimized out>, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:412
+#3  0x00000000011a1f94 in ib_wqueue_timedwait (wq=0x2a64508, wait_in_usecs=5000000) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/ut/ut0wqueue.cc:160
+#4  0x0000000001280e5a in fts_optimize_thread (arg=0x2a64508) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/fts/fts0opt.cc:3040
+#5  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#6  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 4 (Thread 0x7f14e61fc700 (LWP 29864)):
+#0  0x00007f1515fed705 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00000000010b612b in wait (this=0x20ec858) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:165
+#2  os_event::wait_low (this=0x20ec858, reset_sig_count=1) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/os/os0event.cc:335
+#3  0x00000000011e5e3c in buf_resize_thread (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/innobase/buf/buf0buf.cc:3016
+#4  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 3 (Thread 0x7f1508b50700 (LWP 29865)):
+#0  0x00007f1515ff0ec1 in sigwait () from /lib64/libpthread.so.0
+#1  0x00000000007c271b in signal_hand (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/mysqld.cc:2101
+#2  0x0000000000fbdbf4 in pfs_spawn_thread (arg=0x2a47bc0) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/perfschema/pfs.cc:2188
+#3  0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#4  0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 2 (Thread 0x7f14e57fb700 (LWP 29866)):
+#0  0x00007f1515feff7d in __lll_lock_wait () from /lib64/libpthread.so.0
+#1  0x00007f1515febd32 in _L_lock_791 () from /lib64/libpthread.so.0
+#2  0x00007f1515febc38 in pthread_mutex_lock () from /lib64/libpthread.so.0
+#3  0x0000000000f8c77f in native_mutex_lock (mutex=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/include/thr_mutex.h:84
+#4  my_mutex_lock (mp=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/include/thr_mutex.h:182
+#5  inline_mysql_mutex_lock (src_line=105, that=<optimized out>, src_file=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/include/mysql/psi/mysql_thread.h:726
+#6  _myisam_log_command (command=<optimized out>, info=0x7f14e57f8880, buffert=0x7f14e57ef7ef "!@\371~\345\024\177", length=1, result=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/myisam/mi_log.c:105
+#7  0x0000000000f889f7 in mi_extra (info=0x7f14e57f8880, function=HA_EXTRA_MMAP, extra_arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/myisam/mi_extra.c:338
+#8  0x0000000000f91338 in mi_open_share (name=<optimized out>, old_share=<optimized out>, mode=2, open_flags=194) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/myisam/mi_open.c:571
+#9  0x0000000000f6fe50 in ha_myisam::open (this=0x7f14d8041080, name=0x7f14d803ff90 "./mysql/proc", mode=<optimized out>, test_if_locked=130) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/myisam/ha_myisam.cc:763
+#10 0x00000000008176be in handler::ha_open (this=0x7f14d8041080, table_arg=<optimized out>, name=0x7f14d803ff90 "./mysql/proc", mode=2, test_if_locked=2) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/handler.cc:2758
+#11 0x0000000000dbecaa in open_table_from_share (thd=0x20c0190, share=<optimized out>, alias=0x7f1400000010 <Address 0x7f1400000010 out of bounds>, db_stat=39, prgflag=<optimized out>, ha_open_flags=0, outparam=0x7f14d8042e60, is_create_table=false) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/table.cc:3353
+#12 0x0000000000cbf659 in open_table (thd=0x20c0190, table_list=0x7f14d803dbf0, ot_ctx=0x7f14e57f9e20) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_base.cc:3523
+#13 0x0000000000cc2eb6 in open_and_process_table (ot_ctx=0x7f14e57f9e20, has_prelocking_list=false, prelocking_strategy=0x7f14e57fab70, flags=0, counter=0x7f14e57f9efc, tables=0x7f14d803dbf0, lex=0x20c22d8, thd=0x20c0190) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_base.cc:5109
+#14 open_tables (thd=0x20c0190, start=0x7f14e57f9ed8, counter=0x7f14e57f9efc, flags=0, prelocking_strategy=0x7f14e57fab70) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_base.cc:5720
+#15 0x0000000000cc3aee in open_and_lock_tables (thd=<optimized out>, tables=0x7f14d803dbf0, flags=0, prelocking_strategy=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_base.cc:6440
+#16 0x0000000000d13f71 in open_and_lock_tables (flags=0, tables=<optimized out>, thd=0x20c0190) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_base.h:479
+#17 mysql_execute_command (thd=0x20c0190, first_level=true) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_parse.cc:3677
+#18 0x0000000000d18245 in mysql_parse (thd=0x20c0190, parser_state=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/sql_parse.cc:5574
+#19 0x00000000007ea941 in handle_bootstrap_impl (thd=0x20c0190) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/bootstrap.cc:254
+#20 0x00000000007eaf84 in (anonymous namespace)::handle_bootstrap (arg=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/bootstrap.cc:325
+#21 0x0000000000fbdbf4 in pfs_spawn_thread (arg=0x2a67f40) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/storage/perfschema/pfs.cc:2188
+#22 0x00007f1515fe9df5 in start_thread () from /lib64/libpthread.so.0
+#23 0x00007f1514aa960d in clone () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x7f15163f6740 (LWP 29840)):
+#0  0x00007f1515feaf27 in pthread_join () from /lib64/libpthread.so.0
+#1  0x00000000007ea210 in bootstrap (file=<optimized out>) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/bootstrap.cc:367
+#2  0x00000000007c8afd in mysqld_main (argc=10, argv=0x2062990) at /export/home/pb2/build/sb_0-23948522-1498142411.21/mysql-5.7.19/sql/mysqld.cc:4945
+#3  0x00007f15149d4af5 in __libc_start_main () from /lib64/libc.so.6
+#4  0x00000000007bd739 in _start ()
+[umshastr@hod03]~/bugs:

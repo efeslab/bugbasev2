@@ -1,0 +1,1 @@
+SELECT * FROM (VALUES(now(),2)) t;
