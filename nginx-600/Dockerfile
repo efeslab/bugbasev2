@@ -16,4 +16,4 @@ RUN ./configure --with-debug --with-cc-opt='-g3 -O0' --prefix=/etc/nginx
 RUN make && make install
 COPY ./nginx.conf /etc/nginx/conf/nginx.conf
 COPY ./index.html /etc/nginx/html/index.html
-#CMD /etc/nginx/sbin/nginx && curl localhost/loc1.html ; tail /etc/nginx/logs/error.log 
+CMD /etc/nginx/sbin/nginx && curl localhost/loc1.html ; tail /etc/nginx/logs/error.log 

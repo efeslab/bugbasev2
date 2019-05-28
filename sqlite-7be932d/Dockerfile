@@ -8,5 +8,6 @@ RUN wget https://www.sqlite.org/src/tarball/$checkin/SQLite-$checkin.tar.gz
 RUN tar -xvf SQLite-$checkin.tar.gz && rm SQLite-$checkin.tar.gz
 COPY test.sqlite /tmp/test.sqlite
 WORKDIR /tmp/SQLite-$checkin
-RUN ./configure && make && make install
+RUN ./configure -j8 && make -j8 && make install
+WORKDIR /tmp
 CMD sqlite3 < test.sqlite
