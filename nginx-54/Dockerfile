@@ -31,5 +31,4 @@ RUN mkdir -p /home/website/tmp/client_body_temp
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./website.conf /etc/nginx/sites-enabled/website.conf
 COPY ./index.php /etc/nginx/html/index.php
-RUN echo "0.0.0.0 website.com.ua www.website.com.ua\n" >> /etc/hosts
 CMD /etc/nginx/sbin/nginx && curl https://website.com.ua ; tail /etc/nginx/logs/error.log
