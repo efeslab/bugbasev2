@@ -5,6 +5,7 @@
   - ngx_http_process_request at src/http/ngx_http_request.c:1895
 
     `sscf = ngx_http_get_module_srv_conf(r, ngx_http_ssl_module);`
+    
     in which `#define ngx_http_get_module_srv_conf(r, module)  (r)->srv_conf[module.ctx_index]`
     
     `sscf` is loaded according to the request. Since the requested server has no certificate, the ssl context under `sscf` is missing. (WATCH OUT: The root cause dates back to how the server config is processed)
