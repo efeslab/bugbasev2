@@ -1,0 +1,1 @@
+SET STATEMENT max_statement_time=30 FOR DELETE FROM mysql.user where user = 'unknown';
