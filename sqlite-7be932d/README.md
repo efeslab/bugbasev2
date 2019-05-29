@@ -1,4 +1,4 @@
-# [ticket 7be932d](https://www.sqlite.org/src/tktview/7be932d]
+# [ticket 7be932d](https://www.sqlite.org/src/tktview/7be932d)
 - behavior: segmentation fault
 - description: In CLI that uses SQLite, use a prepared statement for `.stats on` after it has been closed by the `.eqp full` logic.
 - sketch:
