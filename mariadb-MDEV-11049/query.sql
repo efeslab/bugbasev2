@@ -1,0 +1,1 @@
+SET GLOBAL replicate_do_db=NULL
