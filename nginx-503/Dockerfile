@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y libssl-dev
 RUN apt-get update && apt-get install -y zlibc zlib1g zlib1g-dev
 RUN apt-get update && apt-get install -y libkrb5-dev
 WORKDIR /tmp
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get update && apt-get install -y nodejs
+RUN npm install -g ws wscat
 ARG version=1.4.4
 RUN wget https://nginx.org/download/nginx-$version.tar.gz
 RUN tar -zxf nginx-$version.tar.gz && rm nginx-$version.tar.gz
