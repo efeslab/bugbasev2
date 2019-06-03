@@ -16,4 +16,4 @@ RUN ./configure --with-debug --with-cc-opt='-g3 -O0' --prefix=/etc/nginx --with-
 RUN make && make install
 COPY ./nginx.conf /etc/nginx/conf/nginx.conf
 COPY ./index.html /etc/nginx/html/index.html
-CMD /etc/nginx/sbin/nginx && curl localhost/loc1.html ; tail /etc/nginx/logs/error.log 
+CMD /etc/nginx/sbin/nginx && curl -i 127.0.0.1:8000 > /dev/null 2>&1 &&curl -i -H 'If-Match: 1' 127.0.0.1:8000 > /dev/null 2>&1 ; sleep 0.5 ; cat /etc/nginx/logs/error.log
