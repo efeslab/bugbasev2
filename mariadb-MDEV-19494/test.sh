@@ -1,0 +1,1 @@
+mysql -uroot information_schema
