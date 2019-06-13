@@ -1,6 +1,6 @@
 # Mariadb-MDEV-16039
 - Behavior: Server Crash (Segmentation fault / [ERROR] mysqld got signal 11;)
-- Crash version: mariadb 10.3.9
+- Crash version: mariadb 10.3.8, 10.3.9
 - Root Cause: Null Pointer Dereference
 - Sketch:
     * Backtrace from gdb: in Item_args::walk_args (this=0x7fffb8088b88, processor=&virtual table offset 776, walk_subquery=false, arg=0x0)
