@@ -11,4 +11,4 @@ WORKDIR /tmp/SQLite-$checkin
 ENV CFLAGS='-g3 -O0'
 RUN ./configure --enable-debug && make -j8 && make install
 WORKDIR /tmp
-CMD sqlite3 < test.sqlite
+CMD sqlite3 < test1.sqlite
