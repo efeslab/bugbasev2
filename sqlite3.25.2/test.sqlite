@@ -1,9 +1,0 @@
-WITH RECURSIVE
-  t(id, parent) AS (VALUES(1,2)),
-  q(id, parent, rn) AS (
-    VALUES(1,2,3)
-    UNION ALL
-    SELECT t.*, ROW_NUMBER() OVER (ORDER BY t.id) AS rn
-      FROM q JOIN t ON t.parent = q.id
-  )
-SELECT * FROM q;
