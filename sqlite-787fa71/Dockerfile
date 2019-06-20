@@ -1,5 +1,5 @@
 FROM debian:latest
-ARG checkin=89e099fb
+ARG checkin=020b8b1
 RUN apt-get update && apt-get install -y gcc libc6-dev make gdb
 RUN apt-get update && apt-get install -y tcl-dev tk-dev
 RUN apt-get update && apt-get install -y file wget vim
