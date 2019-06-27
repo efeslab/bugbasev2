@@ -1,0 +1,59 @@
+0|Init|0|127|0||00|Start at 127
+1|OpenRead|0|2|0|3|00|root=2 iDb=0; t1
+2|Null|0|2|0||00|r[2]=NULL
+3|Integer|83|1|0||00|r[1]=83
+4|OpenRead|3|3|0|k(3,nil,nil,nil)|02|root=3 iDb=0; t1a2
+5|Integer|1|4|0||00|r[4]=1
+6|Once|0|40|0||00|
+7|Null|0|6|0||00|r[6]=NULL; Init subquery result
+8|InitCoroutine|7|21|9||00|sqlite_sq_56009FAA77C0
+9|OpenEphemeral|4|0|0|k(1,B)|08|nColumn=0
+10|OpenRead|2|5|0|1|00|root=5 iDb=0; t2
+11|Explain|2|0|0|SCAN TABLE t2|00|
+12|Rewind|2|19|0||00|
+13|Column|2|0|8||00|r[8]=t2.d
+14|Found|4|18|8|1|00|key=r[8]
+15|MakeRecord|8|1|9||00|r[9]=mkrec(r[8])
+16|IdxInsert|4|9|0||00|key=r[9]
+17|Yield|7|0|0||00|
+18|Next|2|13|0||01|
+19|Close|2|0|0||00|
+20|EndCoroutine|7|0|0||00|
+21|Integer|1|10|0||00|r[10]=1; LIMIT counter
+22|Once|1|33|0||00|
+23|OpenAutoindex|5|2|0|k(2,nil,nil)|00|nColumn=2; for sqlite_sq_56009FAA77C0
+24|InitCoroutine|7|0|9||00|
+25|Yield|7|33|0||00|next row of "sqlite_sq_56009FAA77C0"
+26|Copy|8|11|0||00|r[11]=r[8]; sqlite_sq_56009FAA77C0.d
+27|Ne|12|32|11|(BINARY)|51|if r[12]!=r[11] goto 32
+28|Copy|8|14|0||00|r[14]=r[8]; sqlite_sq_56009FAA77C0.d
+29|Null|0|15|0||00|r[15]=NULL
+30|MakeRecord|14|2|13||00|r[13]=mkrec(r[14..15])
+31|IdxInsert|5|13|0||10|key=r[13]
+32|Goto|0|25|0||03|
+33|Explain|1|0|0|SEARCH SUBQUERY 2 USING AUTOMATIC PARTIAL COVERING INDEX (d=?)|00|
+34|Integer|22|16|0||00|r[16]=22
+35|SeekGE|5|40|16|1|00|key=r[16]
+36|IdxGT|5|40|16|1|00|key=r[16]
+37|Column|5|0|6||00|r[6]=sqlite_sq_56009FAA77C0.d
+38|DecrJumpZero|10|40|0||00|if (--r[10])==0 goto 40
+39|Next|5|36|0||00|
+40|SCopy|6|5|0||00|r[5]=r[6]
+41|IsNull|5|50|0||00|if r[5]==NULL goto 50
+42|SeekGE|3|50|4|2|00|key=r[4..5]
+43|IdxGT|3|50|4|2|00|key=r[4..5]
+44|IdxRowid|3|17|0||00|r[17]=rowid
+45|Seek|0|17|0||00|intkey=r[17]
+46|Explain|0|0|0|SEARCH TABLE t1 USING INDEX t1a2 (a2=? AND a1=?)|00|
+47|RowSetTest|2|49|17|0|00|if r[17] in rowset(2) goto 49
+48|Gosub|1|84|0||00|
+49|Next|3|43|1||00|
+50|ReopenIdx|3|4|0|k(3,nil,nil,nil)|02|root=4 iDb=0; t1a3
+51|Integer|2|18|0||00|r[18]=2
+52|Once|2|73|0||00|
+53|Null|0|20|0||00|r[20]=NULL; Init subquery result
+54|Gosub|7|9|0||00|
+55|Integer|1|21|0||00|r[21]=1; LIMIT counter
+56|Once|3|66|0||00|
+57|OpenAutoindex|6|2|0|k(2,nil,nil)|00|nColumn=2; for sqlite_sq_56009FAA77C0
+58|Rewind|1|66|0||00|
