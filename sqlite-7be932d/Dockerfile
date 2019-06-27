@@ -6,8 +6,9 @@ RUN apt-get update && apt-get install -y file wget vim
 WORKDIR /tmp
 RUN wget https://www.sqlite.org/src/tarball/$checkin/SQLite-$checkin.tar.gz
 RUN tar -xvf SQLite-$checkin.tar.gz && rm SQLite-$checkin.tar.gz
-COPY test.sqlite /tmp/test.sqlite
 WORKDIR /tmp/SQLite-$checkin
-RUN ./configure -j8 && make -j8 && make install
+ENV CFLAGS='-g3 -O0'
+RUN ./configure && make -j8 && make install
 WORKDIR /tmp
+COPY test.sqlite /tmp/test.sqlite
 CMD sqlite3 < test.sqlite
