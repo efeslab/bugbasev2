@@ -10,4 +10,4 @@ WORKDIR /tmp/php-$VERSION
 RUN ./configure CFLAGS="-O0 -g3" && make -j32 && make install
 COPY poc.php data /tmp/
 WORKDIR /tmp
-CMD php -f poc.py data
+CMD php -f poc.php data
