@@ -36,3 +36,5 @@ in the terminal will be able to reproduce that bug.
 After we run the container of bug, we should see some error message from the shell we just execute `docker run`. For now, since those bugs are very trivial, we are expected to get `segmentation fault`.
 ## pending bugs
 For those bug directories with a dash in their name, that indicates we haven't worked them out but hopefully we will. Therefore, the container built on those bug directories doesn't make sense currently.
+## MISC
+To see the total number of bugs reproducible for now, run `bash NumOfBugs.sh` in terminal.
