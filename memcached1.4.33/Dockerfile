@@ -12,13 +12,10 @@ ARG version=1.4.33
 RUN wget https://www.memcached.org/files/memcached-$version.tar.gz
 RUN tar -zxvf memcached-$version.tar.gz && rm memcached-$version.tar.gz
 WORKDIR /tmp/memcached-$version
-RUN ./configure && make && make test && make install
+RUN ./configure && make && make install
 RUN apt-get update && apt-get install -y telnet
 RUN apt-get update && apt-get install -y procps
-RUN apt-get update && apt-get install -y expect
-COPY ./telnet.sh /tmp/telnet.sh
 WORKDIR /tmp
-RUN chmod +x telnet.sh
 RUN apt-get update && apt-get install -y git	
 RUN git clone https://github.com/memcached/mc-crusher.git
 WORKDIR /tmp/mc-crusher
