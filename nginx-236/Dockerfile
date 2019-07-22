@@ -1,12 +1,12 @@
-FROM debian:latest
-RUN apt-get update && apt-get install -y gcc libc6-dev make gdb
-RUN apt-get update && apt-get install -y linux-headers-$(dpkg --print-architecture)
-RUN apt-get update && apt-get install -y wget curl procps
-RUN apt-get update && apt-get install -y git vim 
-RUN apt-get update && apt-get install -y libpcre3 libpcre3-dev
-RUN apt-get update && apt-get install -y libssl1.0-dev
-RUN apt-get update && apt-get install -y zlibc zlib1g zlib1g-dev
-RUN apt-get update && apt-get install -y libkrb5-dev
+FROM debian:stretch
+RUN apt-get update && apt-get install -y gcc libc6-dev make
+# RUN apt-get update && apt-get install -y linux-headers-$(dpkg --print-architecture)
+RUN apt-get install -y wget curl
+# RUN apt-get update && apt-get install -y git vim 
+RUN apt-get install -y libpcre3 libpcre3-dev
+RUN apt-get install -y libssl1.0-dev
+RUN apt-get install -y zlibc zlib1g zlib1g-dev
+RUN apt-get install -y libkrb5-dev
 WORKDIR /tmp
 ARG version=1.3.7
 RUN wget https://nginx.org/download/nginx-$version.tar.gz
