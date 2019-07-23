@@ -1,0 +1,1 @@
+APT::Src::BuildCommand "dpkg-buildpackage -G";
