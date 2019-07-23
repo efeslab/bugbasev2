@@ -19,7 +19,7 @@
 ## Reproduce by building dependencies from source
 #### Details
 * I installed `make apt-src wget` from `apt-get` and try to use `apt-src install <package>` to install dependencies from source. More details about `apt-src` is at https://wiki.debian.org/apt-src.
-* Need to add `deb-src http://ftp.debian.org/debian stretch main` to `\etc\apt\sources.list` and copy file 02dpkg-buildpackage to `/etc/apt/apt.conf.d/02dpkg-buildpackage` which configures the build argument. Detail about the exact command can be checked at linux manual page. [http://man7.org/linux/man-pages/man1/dpkg-buildpackage.1.html]
+* Need to add `deb-src http://ftp.debian.org/debian stretch main` to `\etc\apt\sources.list` and copy file 02dpkg-buildpackage to `/etc/apt/apt.conf.d/02dpkg-buildpackage` which configures the build argument. Details about the exact command can be checked at linux manual page. [http://man7.org/linux/man-pages/man1/dpkg-buildpackage.1.html]
 * Run `apt-src update` before installing any dependency.
 * Use `apt-src --build install <package>` to build dependency from source.
 * When configuring the nginx before make, add flag `--with-cc-opt="-static -static-libgcc" --with-ld-opt="-static"`.
