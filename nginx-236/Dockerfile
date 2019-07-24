@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:stretch
 RUN apt-get update && apt-get install -y gcc libc6-dev make gdb
 RUN apt-get update && apt-get install -y linux-headers-$(dpkg --print-architecture)
 RUN apt-get update && apt-get install -y wget curl procps
