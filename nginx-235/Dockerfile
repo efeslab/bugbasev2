@@ -1,9 +1,9 @@
-FROM debian:latest
+FROM debian:stretch
 RUN apt-get update && apt-get install -y build-essential perl
 RUN apt-get update && apt-get install -y gcc libc6-dev make gdb
 RUN apt-get update && apt-get install -y linux-headers-$(dpkg --print-architecture)
 RUN apt-get update && apt-get install -y wget curl procps file
-RUN apt-get update && apt-get install -y git
+# RUN apt-get update && apt-get install -y git
 RUN apt-get update && apt-get install -y zlibc zlib1g zlib1g-dev
 ARG version=1.2.4
 ARG PCRE_version=8.31
