@@ -44,15 +44,15 @@
         ```
 
         Set `intern->array.u1.v.type` to `IS_UNDEF`.
-        `php_var_unserialize` initialize a new class entry for `intern->array.value.obj->ce`
+        `php_var_unserialize` initializes memory pointed by `intern->array.value.obj` with proper value.
 
     - `php_var_unserialize_internal` at ext/standard/var_unserializer.c:1011
 
         `ZVAL_NEW_REF(rval_ref, rval_ref);`
 
-        When serializing "R:5" in `data`, *i.e.* reference to "ArrayObject", the previously mentioned `intern->array.value.obj->ce` is corrupted, point to an unallocated address.
+        Here, `rval_ref` is exactly `spl_array_object`, *i.e.* `intern` mentioned before, though appears to be `struct _zval_struct *`. When unserializing "R:5" in `data`, *i.e.* reference to "ArrayObject", the previously mentioned `intern->array.value.obj` is pointed to a different memory. However, the value in new memory doesn't make sence.
 
-    - `zim_apl_Array_serialize` at ext/spl/spl_array.c:1691
+    - `zim_spl_Array_serialize` at ext/spl/spl_array.c:1691
 
         ```C
         zval *object = getThis();
