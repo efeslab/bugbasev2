@@ -10,3 +10,8 @@ make && make install
 # build php
 CC=wllvm ./configure --disable-all --disable-cgi --without-pcre-jit --with-gd --with-png-dir=../libpng-1.6.37 --with-zlib-dir=../zlib-1.2.11
 make
+
+#run php
+# env USE_ZEND_ALLOC=0 is important since ZEND_ALLOC requires mmap
+# -disable-verify is a workaround of missing debug info
+USE_ZEND_ALLOC=0 klee —disable-verify=true xxx
