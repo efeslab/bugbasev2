@@ -43,10 +43,38 @@ namespace {
                     }
                 }
             }
-            return false;
+            return true;
+        }
+    };
+
+    struct RmFabs : public BasicBlockPass {
+        static char ID;
+        RmFabs() : BasicBlockPass(ID) {}
+ 
+        bool runOnBasicBlock(BasicBlock &BB) {
+            for (BasicBlock::iterator I = BB.begin(), IE = BB.end(); I != IE; ++I) {
+                if (isa<CallInst>(I)) {
+                    Function *calledFunc = cast<CallInst>(I)->getCalledFunction();
+                    if (calledFunc) { // in case it is a indirect call
+                        StringRef name = calledFunc->getName();
+                            if (name.compare("llvm.fabs.f64") == 0 ||
+                                name.compare("llvm.fabs.f32") == 0 ||
+                                name.compare("llvm.fabs.f80") == 0) {
+                                
+                                // replace instruction calling llvm.fabs.f64 with its argument as value
+                                Value *arg = cast<CallInst>(I)->getArgOperand(0);
+                                ReplaceInstWithValue(BB.getInstList(), I, arg);
+                            }
+                    }
+                }
+            }
+            return true;
         }
     };
 }
 
 char CheckFabs::ID = 0;
-static RegisterPass<CheckFabs> X("checkfabs", "Remove llvm.fabs.f64");
+static RegisterPass<CheckFabs> Y("checkfabs", "print function if it calls llvm.fabs.fXX");
+
+char RmFabs::ID = 0;
+static RegisterPass<RmFabs> X("rmfabs", "Remove llvm.fabs.fXX");
