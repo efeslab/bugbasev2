@@ -36,3 +36,10 @@
         in which a finalized prepared statement is used and segmentation happens when sqlite tried to acquir the lock first before using that statement.
 
 - patch: [Avoid such case in description](https://www.sqlite.org/src/info/bb87c054b1b76959)
+
+## For KLEE:
+configure:
+```
+CC=wllvm ../configure --enable-debug --disable-readline --disable-threadsafe
+```
+[record](record.sh) [replay](replay.sh)
