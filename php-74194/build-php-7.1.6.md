@@ -11,7 +11,7 @@ env USE_ZEND_ALLOC=0 ~/klee/build/bin/klee --libc=uclibc --posix-runtime test.bc
 
 # record
 ```
-klee -solver-backend=stp -call-solver=false -oracle-KTest=test21.ktest -use-forked-solver=false -output-source=false -write-kqueries -write-paths --libc=uclibc --posix-runtime -env-file=php_env -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true -use-independent-solver=false -oob-check=false -allocate-determ ./test.bc poc.php data
+klee -solver-backend=stp -call-solver=false -use-forked-solver=false -output-source=false -write-kqueries -write-paths --libc=uclibc --posix-runtime -env-file=php_env -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true -use-independent-solver=false -oob-check=false -allocate-determ ./test.bc poc.php data
 ```
 
 # replay
