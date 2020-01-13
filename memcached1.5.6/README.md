@@ -8,6 +8,8 @@
 
 * Need to start with the memcached server with -S (SASL) argument in parallel
 
+* Cause: Stale closed connection get revisited
+
 ## Full backtrace with GDB
 
 ```text
