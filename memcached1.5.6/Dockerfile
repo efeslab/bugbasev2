@@ -2,7 +2,7 @@
 FROM ubuntu:18.04
 
 COPY ReproduceMemcachedSegfault-1.0-SNAPSHOT-shaded.jar /
-
+COPY start.sh /
 RUN apt-get update
 RUN apt-get install -y apt-utils wget libevent-dev libsasl2-dev gcc make
 # for make test
@@ -19,6 +19,6 @@ WORKDIR /memcached-$version
 RUN ./configure --enable-sasl && make && make test && make install
 WORKDIR /
 
-CMD  memcached -S -v -u root & java -jar ReproduceMemcachedSegfault-1.0-SNAPSHOT-shaded.jar sammy test localhost 11211
+CMD  bash start.sh
 
 
