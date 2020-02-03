@@ -14,10 +14,22 @@ mkdir libpng
 tar xf xxx.tar.gz -C libpng
 cd libpng
 cp scripts/makefile.gcc Makefile
+vim Makefile # change to "CC=wllvm"
 make
 # build poc using libpng.a
 cd ..
-gcc libpng-2004-0597.c -Ilibpng -Llibpng -lpng -lz -lm
+wllvm libpng-2004-0597.c -Ilibpng -Llibpng -lpng -lz -lm -o poc
 # trigger the bug
-./a.out pngtest_bad.png
+./poc pngtest_bad.png
+extract-bc poc
+```
+
+### klee-record
+```
+klee -solver-backend=stp -call-solver=false -use-forked-solver=false -output-source=false -write-kqueries -write-paths --libc=uclibc --posix-runtime -env-file=env -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true -use-independent-solver=false -oob-check=false -allocate-determ ./poc.bc pngtest_bad.png
+```
+
+### klee-replay
+```
+klee -solver-backend=stp -call-solver=false -oracle-KTest=oracle.ktest -use-forked-solver=false -output-source=false -write-kqueries -write-paths --libc=uclibc --posix-runtime -env-file=env -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true -replay-path=klee-out-0/test000001.path -use-independent-solver=false -oob-check=true -allocate-determ ./poc.bc pngtest_bad.png -sym-file pngtest_bad.png ????
 ```
