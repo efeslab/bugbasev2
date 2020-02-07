@@ -1,0 +1,3 @@
+[submodule "matrixssl_stack_buffer_overflow/matrixssl"]
+	path = matrixssl_stack_buffer_overflow/matrixssl
+	url = https://github.com/efeslab/matrixssl.git
