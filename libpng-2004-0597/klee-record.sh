@@ -1,0 +1,1 @@
+klee -solver-backend=stp -call-solver=false -use-forked-solver=false -output-source=false -write-kqueries -write-paths --libc=uclibc --posix-runtime -env-file=env -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true -use-independent-solver=false -oob-check=false -allocate-determ ./poc.bc pngtest_bad.png

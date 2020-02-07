@@ -16,9 +16,13 @@ cd libpng
 cp scripts/makefile.gcc Makefile
 vim Makefile # change to "CC=wllvm"
 make
+# build zlib.a
+tar xf zlib-1.2.11.tar.gz
+cd zlib-1.2.11
+CC=wllvm ./configure --static
 # build poc using libpng.a
 cd ..
-wllvm libpng-2004-0597.c -Ilibpng -Llibpng -lpng -lz -lm -o poc
+wllvm libpng-2004-0597.c -Ilibpng libpng/libpng.a zlib-1.2.11/libz.a -lm -o poc
 # trigger the bug
 ./poc pngtest_bad.png
 extract-bc poc
