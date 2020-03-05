@@ -1,6 +1,6 @@
 .DS_Store
 *.swp
 build/
-klee-out-*
+*klee-out*
 *.bc
 *.ll
