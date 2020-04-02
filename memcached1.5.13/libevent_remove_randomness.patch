@@ -1,0 +1,11 @@
+--- orig_libevent/select.c	2019-01-12 13:39:07.000000000 -0500
++++ libevent-2.1.11-stable/select.c	2020-04-04 21:49:47.665622552 -0400
+@@ -121,7 +121,7 @@
+ 
+ 	evsig_init_(base);
+ 
+-	evutil_weakrand_seed_(&base->weakrand_seed, 0);
++	evutil_weakrand_seed_(&base->weakrand_seed, 1/*magic seed*/);
+ 
+ 	return (sop);
+ }
