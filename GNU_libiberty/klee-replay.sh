@@ -16,5 +16,5 @@ klee -solver-backend=stp -call-solver=false -output-stats=false \
   -replay-path=${KLEE_RECORD_OUT_DIR}/test000001.path \
   -use-independent-solver=false -oob-check=true -allocate-determ \
   -all-external-warnings -output-dir=${KLEE_REPLAY_OUT_DIR} \
-  ${RUN_BC} -x c2 -sym-file c2 1691
+  ${RUN_BC} -x c2 -sym-file c2
 cp ${KLEE_RECORD_OUT_DIR}/${FREQ_BC} ${KLEE_REPLAY_OUT_DIR}

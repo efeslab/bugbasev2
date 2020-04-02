@@ -6,6 +6,7 @@ ITER=$1
 source $(dirname $0)/klee-env.sh
 
 prepass -assign-id -insert-ptwrite -ptwrite-cfg=${DATARECCFG} ${BASE_BC} ${PREPASS_BC}
+cp ${PREPASS_BC} ${RUN_BC}
 rm -rf ${KLEE_RECORD_OUT_DIR}
 klee -save-final-module-path=${FREQ_BC} -solver-backend=stp -call-solver=false \
      -output-stats=false -output-istats=false -use-forked-solver=false \
@@ -14,5 +15,5 @@ klee -save-final-module-path=${FREQ_BC} -solver-backend=stp -call-solver=false \
      -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true \
      -use-independent-solver=false -oob-check=false -allocate-determ \
      -output-dir=${KLEE_RECORD_OUT_DIR} \
-     ${PREPASS_BC} poc.php data
+     ${RUN_BC} --posix-debug poc.php data
 cp ${FREQ_BC} ${PREPASS_BC} ${DATARECCFG} ${KLEE_RECORD_OUT_DIR} 
