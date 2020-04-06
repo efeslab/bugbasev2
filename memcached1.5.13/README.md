@@ -1,3 +1,10 @@
+# Info
+
+This is CVE-2019-11596
+Source: https://nvd.nist.gov/vuln/detail/CVE-2019-11596
+
+Patched commit: d35334f368817a77a6bd1f33c6a5676b2c402c02
+
 ### build libevent
 apply two patches:
 
