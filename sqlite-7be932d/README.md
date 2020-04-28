@@ -42,4 +42,4 @@ configure:
 ```
 CC=wllvm ../configure --enable-debug --disable-readline --disable-threadsafe
 ```
-[record](record.sh) [replay](replay.sh)
+[record](klee-record.sh) [replay](klee-replay.sh)
