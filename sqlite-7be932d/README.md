@@ -43,3 +43,4 @@ configure:
 CC=wllvm ../configure --enable-debug --disable-readline --disable-threadsafe
 ```
 [record](klee-record.sh) [replay](klee-replay.sh)
+NOTE: remember to enable oob-check in the last replay
