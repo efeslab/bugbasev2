@@ -16,5 +16,5 @@ klee -solver-backend=stp -call-solver=false -output-stats=false \
   -replay-path=${KLEE_RECORD_OUT_DIR}/test000001.path \
   -use-independent-solver=false -oob-check=true -allocate-determ \
   -output-dir=${KLEE_REPLAY_OUT_DIR} \
-  ${RUN_BC} -posix-debug -symbolic-sock-handler -sock-handler memcached_1.5.13 -t 1 -p 11212 -l 127.0.0.1
+  ${RUN_BC} -posix-debug -symbolic-gettimeofday -symbolic-sock-handler -sock-handler memcached_1.5.13 -t 1 -p 11212 -l 127.0.0.1
 cp ${KLEE_RECORD_OUT_DIR}/${FREQ_BC} ${KLEE_REPLAY_OUT_DIR}

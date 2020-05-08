@@ -13,7 +13,7 @@ klee -solver-backend=stp -call-solver=false -output-stats=false \
   --posix-runtime -env-file=php_env \
   -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true \
   -replay-path=${KLEE_RECORD_OUT_DIR}/test000001.path \
-  -use-independent-solver=false -oob-check=true -allocate-determ \
-  -all-external-warnings -output-dir=${KLEE_REPLAY_OUT_DIR} \
+  -use-independent-solver=true -oob-check=true -allocate-determ \
+  -all-external-warnings -output-dir=${KLEE_REPLAY_OUT_DIR} -kinst-binding=firstoccur\
   ${RUN_BC} poc.php data -posix-debug -sym-file poc.php -sym-file data
 cp ${KLEE_RECORD_OUT_DIR}/${FREQ_BC} ${KLEE_REPLAY_OUT_DIR}

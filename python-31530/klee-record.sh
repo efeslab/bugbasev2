@@ -16,6 +16,6 @@ klee -save-final-module-path=${FREQ_BC} -solver-backend=stp -call-solver=false \
      -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true \
      -use-independent-solver=false -oob-check=false -allocate-determ \
      -output-dir=${KLEE_RECORD_OUT_DIR} \
-     ${RUN_BC} stackbufferoverflow.txt
+     ${RUN_BC} -unsafe readahead.py
 # -debug-schedule
 cp ${FREQ_BC} ${PREPASS_BC} ${DATARECCFG} ${KLEE_RECORD_OUT_DIR} 

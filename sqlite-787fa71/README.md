@@ -18,3 +18,12 @@
     - [Disable co-routine in that case](https://www.sqlite.org/src/info/531eca6104e41e43)
     - [Evaluate Once instead of twice](https://www.sqlite.org/src/info/e130319317e76119)
     - [For non-constant expression, still twice](https://www.sqlite.org/src/info/778b1224a318d013)
+
+# build with klee
+```
+CC=wllvm ../configure --enable-debug --disable-readline --disable-threadsafe --disable-shared --enable-static
+```
+# reproduce the bug
+```
+./sqlite3 -init test.sqlite
+```
