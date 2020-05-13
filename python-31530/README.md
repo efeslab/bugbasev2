@@ -3,6 +3,8 @@
 
 [POC](https://bugs.python.org/file47156/readahead.py)
 
+[patch](https://bugs.python.org/file47157/0001-stop-crashes-when-iterating-over-a-file-on-multiple-.patch)
+
 ## Build
 I followed the [wiki](https://wiki.python.org/moin/BuildStatically) to build
 python statically.
