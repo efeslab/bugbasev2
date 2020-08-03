@@ -2,7 +2,7 @@
 - Behaviour: Memory Leak
 - Description: Memory leak with the latest tensorflow
 - Affect version: 2.3.0
-- Failure Sketch:
+- Description :
    	OS Platform and Distribution: Windows 10
 	TensorFlow installed from: conda
 	TensorFlow version: 2.3.0
