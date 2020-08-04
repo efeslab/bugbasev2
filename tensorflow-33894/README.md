@@ -1,7 +1,7 @@
 # Tensorflow bug 33894
 - behavior: Segmentation Fault
 
-- description: Eager context device issue Segmentation Fault after context resetting ServerDef
+- description: Eager context device issue segmentation fault after context resetting serverDef
 
 - Affect version: tensorflow:2.0.0
 
