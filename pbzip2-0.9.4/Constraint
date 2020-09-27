@@ -1,0 +1,10 @@
+# recordUN=const_arr2,const_arr4 single result so if I choose the longest WR
+# chain should be the same result
+# QueryAvg < 3s
+# copy_input_until_stop:B27:B27I5
+# all input
+# time: 95s
+replay.0.klee-out/constraints_cnt003_state000.kquery
+
+# FINISH!
+# time: 60s
