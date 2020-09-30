@@ -1,0 +1,221 @@
+--- a/configure	2019-04-01 13:56:23.000000000 -0400
++++ b/configure	2020-09-28 06:31:39.123645875 -0400
+@@ -20966,17 +20966,17 @@
+ 
+ 
+ 
+-for ac_func in poll kqueue port_create
+-do :
+-  as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+-ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
+-if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
+-  cat >>confdefs.h <<_ACEOF
+-#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+-_ACEOF
+-
+-fi
+-done
++#for ac_func in poll kqueue port_create
++#do :
++#  as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
++#ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
++#if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
++#  cat >>confdefs.h <<_ACEOF
++##define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
++#_ACEOF
++#
++#fi
++#done
+ 
+ 
+ # Check for the Linux epoll interface; epoll* may be available in libc
+@@ -21001,7 +21001,7 @@
+ }
+ _ACEOF
+ if ac_fn_c_try_run "$LINENO"; then :
+-  apr_cv_epoll=yes
++  apr_cv_epoll=no
+ else
+   apr_cv_epoll=no
+ fi
+@@ -21040,7 +21040,7 @@
+ }
+ _ACEOF
+ if ac_fn_c_try_run "$LINENO"; then :
+-  apr_cv_epoll_create1=yes
++  apr_cv_epoll_create1=no
+ else
+   apr_cv_epoll_create1=no
+ fi
+@@ -22319,32 +22319,32 @@
+ useos2shm="0"
+ usewin32shm="0"
+ 
+-case $ac_decision in
+-    USE_SHMEM_MMAP_TMP )
+-        usemmaptmp="1"
+-        ;;
+-    USE_SHMEM_MMAP_SHM )
+-        usemmapshm="1"
+-        ;;
+-    USE_SHMEM_SHMGET )
+-        useshmget="1"
+-        ;;
+-    USE_SHMEM_BEOS )
+-        usebeosarea="1"
+-        ;;
+-    USE_SHMEM_OS2 )
+-        useos2shm="1"
+-        ;;
+-    USE_SHMEM_WIN32 )
+-        usewin32shm="1"
+-        ;;
+-esac
++#case $ac_decision in
++#    USE_SHMEM_MMAP_TMP )
++#        usemmaptmp="1"
++#        ;;
++#    USE_SHMEM_MMAP_SHM )
++#        usemmapshm="1"
++#        ;;
++#    USE_SHMEM_SHMGET )
++#        useshmget="1"
++#        ;;
++#    USE_SHMEM_BEOS )
++#        usebeosarea="1"
++#        ;;
++#    USE_SHMEM_OS2 )
++#        useos2shm="1"
++#        ;;
++#    USE_SHMEM_WIN32 )
++#        usewin32shm="1"
++#        ;;
++#esac
+ 
+ # Do we have any shared memory support?
+ if test "$usemmaptmp$usemmapshm$usemmapzero$useshmget$usemmapanon$usebeosarea$useos2shm$usewin32shm" = "00000000"; then
+   sharedmem="0"
+ else
+-  sharedmem="1"
++  sharedmem="0"
+ fi
+ 
+ 
+@@ -26666,7 +26666,7 @@
+ _ACEOF
+ if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+   $EGREP "YES_IS_DEFINED" >/dev/null 2>&1; then :
+-  ac_cv_define_POLLIN=yes
++  ac_cv_define_POLLIN=no
+ fi
+ rm -f conftest*
+ 
+@@ -26946,6 +26946,7 @@
+ fi
+ 
+ fi
++apr_cv_mutex_robust_shared=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $apr_cv_mutex_robust_shared" >&5
+ $as_echo "$apr_cv_mutex_robust_shared" >&6; }
+ 
+@@ -27021,7 +27022,7 @@
+ done
+ if test ".$ac_rc" = .yes; then
+     :
+-    hassysvser="1"
++    hassysvser="0"
+ else
+     :
+     hassysvser="0"
+@@ -27118,7 +27119,7 @@
+ done
+ if test ".$ac_rc" = .yes; then
+     :
+-    hasprocpthreadser="1"
++    hasprocpthreadser="0"
+ else
+     :
+     hasprocpthreadser="0"
+@@ -27314,18 +27315,18 @@
+         break
+     fi
+ done
+-if test ".$ac_rc" = .yes; then
+-    :
+-
+-ac_decision='USE_SYSVSEM_SERIALIZE'
+-ac_decision_msg='SysV IPC semget()'
+-ac_decision_USE_SYSVSEM_SERIALIZE=yes
+-ac_decision_USE_SYSVSEM_SERIALIZE_msg='SysV IPC semget()'
+-
+-else
+-    :
+-
+-fi
++#if test ".$ac_rc" = .yes; then
++#    :
++#
++#ac_decision='USE_SYSVSEM_SERIALIZE'
++#ac_decision_msg='SysV IPC semget()'
++#ac_decision_USE_SYSVSEM_SERIALIZE=yes
++#ac_decision_USE_SYSVSEM_SERIALIZE_msg='SysV IPC semget()'
++#
++#else
++#    :
++#
++#fi
+ 
+ ac_rc=yes
+ for ac_spec in header:OS.h func:create_sem func:acquire_sem func:acquire_sem_etc; do
+@@ -27365,18 +27366,18 @@
+ fi
+ 
+ # pthread mutex both pshared and robust[_np] is the best default
+-case "$apr_cv_mutex_robust_shared" in
+-"yes"|"np")
+-
+-ac_decision='USE_PROC_PTHREAD_SERIALIZE'
+-ac_decision_msg='pthread pshared mutex'
+-ac_decision_USE_PROC_PTHREAD_SERIALIZE=yes
+-ac_decision_USE_PROC_PTHREAD_SERIALIZE_msg='pthread pshared mutex'
+-
+-    ;;
+-*)
+-    ;;
+-esac
++#case "$apr_cv_mutex_robust_shared" in
++#"yes"|"np")
++#
++#ac_decision='USE_PROC_PTHREAD_SERIALIZE'
++#ac_decision_msg='pthread pshared mutex'
++#ac_decision_USE_PROC_PTHREAD_SERIALIZE=yes
++#ac_decision_USE_PROC_PTHREAD_SERIALIZE_msg='pthread pshared mutex'
++#
++#    ;;
++#*)
++#    ;;
++#esac
+ if test "x$apr_lock_method" != "x"; then
+     ac_decision="$apr_lock_method"
+ eval "ac_decision_msg=\"\$ac_decision_${ac_decision}_msg\""
+--- a/poll/unix/select.c	2017-09-19 03:31:30.000000000 -0400
++++ b/poll/unix/select.c	2020-09-30 18:21:51.786740769 -0400
+@@ -27,6 +27,18 @@
+ #include "apr_arch_networkio.h"
+ #include "apr_arch_poll_private.h"
+ 
++// klee POSIX env hack
++// Do not use system FD_ZERO definition, since it contains inline asm
++#undef FD_ZERO
++# define FD_ZERO(set) \
++  do {									      \
++    unsigned int __i;							      \
++    fd_set *__arr = (set);						      \
++    for (__i = 0; __i < sizeof (fd_set) / sizeof (__fd_mask); ++__i)	      \
++      __FDS_BITS (__arr)[__i] = 0;					      \
++  } while (0)
++// end klee POSIX env hack
++
+ #ifdef POLL_USES_SELECT
+ 
+ APR_DECLARE(apr_status_t) apr_poll(apr_pollfd_t *aprset, int num,

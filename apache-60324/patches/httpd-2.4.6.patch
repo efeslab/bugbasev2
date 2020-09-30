@@ -1,0 +1,31 @@
+--- a/configure	2013-07-15 12:44:10.000000000 -0400
++++ b/configure	2020-09-28 06:11:24.928751567 -0400
+@@ -25760,18 +25760,21 @@
+     for ac_func in kqueue port_create epoll_create
+ do :
+   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+-ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
+-if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
+-  cat >>confdefs.h <<_ACEOF
+-#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+-_ACEOF
+-
+-fi
++  eval "$as_ac_var=no"
++#ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
++#if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
++#  cat >>confdefs.h <<_ACEOF
++##define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
++#_ACEOF
++#
++#fi
+ done
+ 
++    echo "have threadsafe?: " "$ac_cv_func_kqueue$ac_cv_func_port_create$ac_cv_func_epoll_create" 
+     if test "$ac_cv_func_kqueue$ac_cv_func_port_create$ac_cv_func_epoll_create" != "nonono"; then
+         ac_cv_have_threadsafe_pollset=yes
+     else
++	echo "NO threadsafe pollset !!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+         ac_cv_have_threadsafe_pollset=no
+     fi
+ 
