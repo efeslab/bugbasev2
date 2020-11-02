@@ -1,0 +1,48 @@
+# replay.0.klee-out/symbolicValues.kquery
+# need to concretize symbolic stat file path
+# replay.0.klee-out/symbolicValues.kquery
+ap_getword_conf:B11:B11I1
+apr_filepath_merge:B27:B27I2
+apr_filepath_merge:B38:B38I1
+# choose to record input (z3) (full httpd.conf)
+# recordUN=const_arr2, indep_thres=2
+# replay.1.klee-out/test000001.kquery
+# TODO: try partial httpd recording, do not record ap_str_tolower, but
+# find_entry:B5:B5I3
+ap_build_config_sub:B30:B30I2
+ap_build_config_sub:B5:B5I2
+ap_build_config_sub:B6:B6I6
+ap_build_config_sub:B8:B8I2
+ap_str_tolower:B2:B2I1
+# symbolic POSIX args (z3)
+# replay.2manual.klee-out/symbolicPOSIX.kquery
+alloc_listener:B16:B16I1
+# Ambiguous Memory
+# replay.3manual.klee-out/AmbiguousAddress.kquery (Ptr)
+# NonPtr recording is 4x more expensive
+# This is inside a hash function. The input needed by this hash function is even
+# much more expensive to record.
+find_entry:B7:B7I2
+# solver timeout
+# recordUN const_arr4
+# replay.4manual.klee-out/queryTimeMaxOnce_64395388.kquery
+apr_table_setn:B1:B1I2
+apr_table_setn:B3:B3I2
+apr_table_setn:B5:B5I2
+invoke_cmd:B35:B35I8
+# solver timeout
+# manual
+# replay.5manual.klee-out/queryTimeMaxOnce_223959822.kquery
+invoke_cmd:B49:B49I1
+# solver timeout (hard, large malloc)
+# manual, direct input record
+# replay.6manual.klee-out/z3stuck.kquery
+# 33.7K * 1B
+apr_random_add_entropy:B6:B6I4
+# symbolic strings in POSIX call
+# __fd_open, "conf/mime.types"
+# replay.7manual.klee-out/symbolicValues.kquery
+apr_filepath_merge:B41:B41I1
+# solver timeout (20s, early), manual
+# replay.8manual.klee-out/queryTimeMaxOnce_22383915.kquery
+apr_table_addn:B0:B0I9

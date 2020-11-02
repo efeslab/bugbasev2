@@ -34,7 +34,7 @@ NOTE:
 1. Need to use `realpath xxx` as prefix, since relative dir misled httpd to
    include same header file twice.
 ```
-CC=wllvm ./configure --prefix=`realpath $PWD/../install` --disable-posix-shm --disable-allocator-uses-mmap --disable-shared --disable-malloc-debug
+CC=wllvm ./configure --prefix=`realpath $PWD/../install` --disable-posix-shm --disable-allocator-uses-mmap --disable-shared --disable-malloc-debug --with-devrandom=/dev/urandom
 #NOTE: `make -j` did not work here
 make install
 ```
@@ -111,7 +111,7 @@ patches NOTE:
 1. hack `configure` to:
     - disable thread-safe pollsets
 ```
-CC=wllvm ./configure --disable-shared --disable-ssl --enable-mods-static=all --prefix=$PWD/../install --disable-cgi --disable-cgid --with-pcre=$PWD/../install --with-apr=$PWD/../install --with-apr-util=$PWD/../install --disable-auth-digest
+CC=wllvm ./configure --disable-shared --disable-ssl --enable-mods-static=all --prefix=$PWD/../install --disable-cgi --disable-cgid --with-pcre=$PWD/../install --with-apr=$PWD/../install --with-apr-util=$PWD/../install --disable-auth-digest --disable-cache --disable-cache-disk --disable-cache-socache --disable-socache-shmcb --disable-socache-dbm --disable-socache-memcache --disable-socache-dc --disable-so
 make -j24 install
 ```
 

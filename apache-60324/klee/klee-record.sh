@@ -15,6 +15,7 @@ klee -save-final-module-path=${FREQ_BC} -solver-backend=stp -call-solver=false \
      -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true \
      -use-independent-solver=false -oob-check=false -allocate-determ \
      -output-dir=${KLEE_RECORD_OUT_DIR} \
-     ${RUN_BC} --posix-debug --unsafe -sock-handler apache-60324 -X
+     ${RUN_BC} --posix-debug --unsafe -sock-handler apache-60324 -conc-urandom fakeurandom -X
 # --posix-debug 
+#-all-external-warnings 
 cp ${FREQ_BC} ${PREPASS_BC} ${DATARECCFG} ${KLEE_RECORD_OUT_DIR} 
