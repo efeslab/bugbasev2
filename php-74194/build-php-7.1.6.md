@@ -1,8 +1,16 @@
+# Download php
+wget https://www.php.net/distributions/php-7.1.6.tar.xz
 # build php
 apply php-7.1.6.klee.patch
+```
 CC=wllvm ./configure --disable-all --disable-cgi --without-pcre-jit
 make
 extract-bc sapi/cli/php
+```
+NOTE:
+1. do not try to configure and make from a seperate directory.
+2. apply '--enable-debug' if you want
+
 # run php in klee
 # fabs is removed from bitcode as a workaround of lack of klee support
 # env USE_ZEND_ALLOC=0 is important since ZEND_ALLOC requires mmap

@@ -1,0 +1,13 @@
+--- a/src/wherecode.c	2020-12-17 17:45:40.870060683 -0500
++++ b/src/wherecode.c	2020-12-17 17:45:46.166181669 -0500
+@@ -1758,6 +1758,10 @@
+     ** column values are.  https://www.sqlite.org/src/info/7fa8049685b50b5a
+     */
+     if( pLevel->iLeftJoin==0 ){
++      // This assertion comes directly from the bugfix patch, which disable
++      // optimizations in a certain scenario. I do not understand why such
++      // optimizations are invalid.
++      assert((pWInfo->wctrlFlags & WHERE_OR_SUBCLAUSE) == 0);
+       whereIndexExprTrans(pIdx, iCur, iIdxCur, pWInfo);
+     }
+ 

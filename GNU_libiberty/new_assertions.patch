@@ -1,0 +1,30 @@
+--- a/bfd/elfcode.h	2020-12-18 09:54:07.981768285 -0500
++++ b/bfd/elfcode.h	2020-12-18 09:58:11.839329736 -0500
+@@ -72,6 +72,7 @@
+ #include "libbfd.h"
+ #include "elf-bfd.h"
+ #include "libiberty.h"
++#include <assert.h>
+ 
+ /* Renaming structures, typedefs, macros and functions to be size-specific.  */
+ #define Elf_External_Ehdr	NAME(Elf,External_Ehdr)
+@@ -680,6 +681,9 @@
+       if (i_ehdrp->e_shnum > ((bfd_size_type) -1) / sizeof (*i_shdrp))
+ 	goto got_wrong_format_error;
+ #endif
++      // For new assertions during replay (vassert)
++      // From the bugfix patch, I know here could be overflow.
++      assert(i_ehdrp->e_shnum <= (i_ehdrp->e_shnum * sizeof(*i_shdrp)));
+       amt = sizeof (*i_shdrp) * i_ehdrp->e_shnum;
+       i_shdrp = (Elf_Internal_Shdr *) bfd_alloc (abfd, amt);
+       if (!i_shdrp)
+@@ -774,6 +778,9 @@
+       if (i_ehdrp->e_phnum > ((bfd_size_type) -1) / sizeof (*i_phdr))
+ 	goto got_wrong_format_error;
+ #endif
++      // For new assertions during replay (vassert)
++      // From the bugfix patch, I know here could be overflow.
++      assert(i_ehdrp->e_phnum <= (i_ehdrp->e_phnum * sizeof (*i_phdr)));
+       amt = i_ehdrp->e_phnum * sizeof (*i_phdr);
+       elf_tdata (abfd)->phdr = (Elf_Internal_Phdr *) bfd_alloc (abfd, amt);
+       if (elf_tdata (abfd)->phdr == NULL)

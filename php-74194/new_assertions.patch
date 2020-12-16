@@ -1,0 +1,14 @@
+--- a/ext/spl/spl_array.c	2020-12-17 22:55:09.078338458 -0500
++++ b/ext/spl/spl_array.c	2020-12-17 22:58:54.655487556 -0500
+@@ -1794,6 +1794,11 @@
+ 		}
+ 		intern->ar_flags &= ~SPL_ARRAY_CLONE_MASK;
+ 		intern->ar_flags |= flags & SPL_ARRAY_CLONE_MASK;
++		// for vassert assertion use case
++		// This is taken directly from the bugfix patch
++		// The asserted predicate was used to change the unserialize behavior
++		// (including ZVAL_UNDEF) in the patch.
++		assert(flags & SPL_ARRAY_IS_SELF);
+ 		zval_ptr_dtor(&intern->array);
+ 		ZVAL_UNDEF(&intern->array);
+ 		if (!php_var_unserialize(&intern->array, &p, s + buf_len, &var_hash)

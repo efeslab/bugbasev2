@@ -94,3 +94,6 @@
                     Attempt to deferencing `intern->array.value.obj->ce` failed and resulted in segmentation fault.
 
 - patch: [instead of only calling destructor, reconstruct array object](http://git.php.net/?p=php-src.git;a=commit;h=afc22828ea036814e6a044083dade065b4c858c9)
+
+## For new assertion use case (vassert): apply `new_assertions.patch`
+NOTE: you need to add "--enable-debug" during configuration to preserve the "assert" expression. Otherwise they will become `(void)(0)`.

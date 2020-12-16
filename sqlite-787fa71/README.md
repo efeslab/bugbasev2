@@ -19,6 +19,14 @@
     - [Evaluate Once instead of twice](https://www.sqlite.org/src/info/e130319317e76119)
     - [For non-constant expression, still twice](https://www.sqlite.org/src/info/778b1224a318d013)
 
+# Download sqlite
+The version I have been using:
+https://www.sqlite.org/src/tarball/020b8b10/SQLite-020b8b10.tar.gz
+Note that the first patch listed above, can serve as a "workaround" of the
+chosen failure input.
+However, a better solution (the last two patches) happens about one year later,
+which does not apply to the version of code I have been using.
+
 # build with klee
 ```
 CC=wllvm ../configure --enable-debug --disable-readline --disable-threadsafe --disable-shared --enable-static
@@ -27,3 +35,11 @@ CC=wllvm ../configure --enable-debug --disable-readline --disable-threadsafe --d
 ```
 ./sqlite3 -init test.sqlite
 ```
+
+## For new assertion during replay: apply `new_assertions.patch`
+I only know from the bug report discussion that some "micro-ops"/subqueries
+should only be evaluated once if they are used in multiple places within the
+query.  The root cause above, which was diagnosed by intern, seems not
+convincing enough, since the series of bugfix later does not emphasize "Rewind
+should open already opened cursor". The description above is more like a symptom
+than root cause.

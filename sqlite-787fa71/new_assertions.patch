@@ -1,0 +1,36 @@
+diff -ru src.bak/sqliteInt.h src/sqliteInt.h
+--- a/src/sqliteInt.h	2020-12-17 00:23:30.199432976 -0500
++++ b/src/sqliteInt.h	2020-12-17 00:26:50.168009663 -0500
+@@ -2252,6 +2252,7 @@
+     unsigned notIndexed :1;    /* True if there is a NOT INDEXED clause */
+     unsigned isCorrelated :1;  /* True if sub-query is correlated */
+     unsigned viaCoroutine :1;  /* Implemented as a co-routine */
++    unsigned viaCoroutineUsed :1; /* for new assertions debugging during replay */
+     unsigned isRecursive :1;   /* True for recursive reference in WITH */
+ #ifndef SQLITE_OMIT_EXPLAIN
+     u8 iSelectId;     /* If pSelect!=0, the id of the sub-select in EQP */
+diff -ru src.bak/where.c src/where.c
+--- a/src/where.c	2020-12-17 00:23:30.335436085 -0500
++++ b/src/where.c	2020-12-17 00:36:42.413685353 -0500
+@@ -1926,6 +1926,9 @@
+     VdbeCoverage(v);
+     VdbeComment((v, "next row of \"%s\"", pTabItem->pTab->zName));
+   }else{
++    // Should not use the same coroutine twice (the first use will reset the
++    // "viaCoroutine" flag
++    assert(!pTabItem->viaCoroutineUsed);
+     addrTop = sqlite3VdbeAddOp1(v, OP_Rewind, pLevel->iTabCur); VdbeCoverage(v);
+   }
+   if( pPartial ){
+@@ -1942,7 +1945,11 @@
+     translateColumnToCopy(v, addrTop, pLevel->iTabCur, pTabItem->regResult);
+     sqlite3VdbeAddOp2(v, OP_Goto, 0, addrTop);
+     pTabItem->viaCoroutine = 0;
++    pTabItem->viaCoroutineUsed = 1;
+   }else{
++    // Should not use the same coroutine twice (the first use will reset the
++    // "viaCoroutine" flag
++    assert(!pTabItem->viaCoroutineUsed);
+     sqlite3VdbeAddOp2(v, OP_Next, pLevel->iTabCur, addrTop+1); VdbeCoverage(v);
+   }
+   sqlite3VdbeChangeP5(v, SQLITE_STMTSTATUS_AUTOINDEX);
