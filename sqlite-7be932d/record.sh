@@ -1,1 +1,0 @@
-klee -allocate-determ -use-independent-solver=false -output-stats=false -output-istats=false -use-forked-solver=false -output-source=false -write-kqueries -write-paths --libc=uclibc --posix-runtime -env-file=env -pathrec-entry-point="__klee_posix_wrapped_main" -ignore-posix-path=true sqlite3.bc < ../../test.sqlite 2>&1 | tee record.log
