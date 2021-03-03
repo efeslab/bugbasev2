@@ -2,5 +2,5 @@
 	path = matrixssl_stack_buffer_overflow/matrixssl
 	url = git@github.com:efeslab/matrixssl.git
 [submodule "python-31530/cpython"]
-	path = python-31530/cpython
+	path = python-2018-1000030/cpython
 	url = https://github.com/python/cpython.git
