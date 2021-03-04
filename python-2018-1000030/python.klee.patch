@@ -1,0 +1,71 @@
+diff --git a/Objects/fileobject.c b/Objects/fileobject.c
+index 7e07a5376f..da937e785c 100644
+--- a/Objects/fileobject.c
++++ b/Objects/fileobject.c
+@@ -27,11 +27,11 @@
+ #endif
+ 
+ #ifdef HAVE_GETC_UNLOCKED
+-#define GETC(f) getc_unlocked(f)
++#define GETC(f) fgetc_unlocked(f)
+ #define FLOCKFILE(f) flockfile(f)
+ #define FUNLOCKFILE(f) funlockfile(f)
+ #else
+-#define GETC(f) getc(f)
++#define GETC(f) fgetc(f)
+ #define FLOCKFILE(f)
+ #define FUNLOCKFILE(f)
+ #endif
+diff --git a/pyconfig.h.in b/pyconfig.h.in
+index 22dc2dba6d..3b066a0632 100644
+--- a/pyconfig.h.in
++++ b/pyconfig.h.in
+@@ -89,10 +89,10 @@
+ #undef HAVE_BROKEN_PIPE_BUF
+ 
+ /* Define if poll() sets errno on invalid file descriptors. */
+-#undef HAVE_BROKEN_POLL
++#define HAVE_BROKEN_POLL 1
+ 
+ /* Define if the Posix semaphores do not work on your system */
+-#undef HAVE_BROKEN_POSIX_SEMAPHORES
++#define HAVE_BROKEN_POSIX_SEMAPHORES 1
+ 
+ /* Define if pthread_sigmask() does not work on your system. */
+ #undef HAVE_BROKEN_PTHREAD_SIGMASK
+@@ -296,7 +296,7 @@
+ 
+ /* Define if we can use gcc inline assembler to get and set x87 control word
+    */
+-#undef HAVE_GCC_ASM_FOR_X87
++//#undef HAVE_GCC_ASM_FOR_X87
+ 
+ /* Define if you have the getaddrinfo function. */
+ #undef HAVE_GETADDRINFO
+@@ -305,7 +305,7 @@
+ #undef HAVE_GETCWD
+ 
+ /* Define this if you have flockfile(), getc_unlocked(), and funlockfile() */
+-#undef HAVE_GETC_UNLOCKED
++//#undef HAVE_GETC_UNLOCKED
+ 
+ /* Define to 1 if you have the `getentropy' function. */
+ #undef HAVE_GETENTROPY
+@@ -506,7 +506,7 @@
+ #undef HAVE_MKTIME
+ 
+ /* Define to 1 if you have the `mmap' function. */
+-#undef HAVE_MMAP
++//#undef HAVE_MMAP
+ 
+ /* Define to 1 if you have the `mremap' function. */
+ #undef HAVE_MREMAP
+@@ -1155,7 +1155,7 @@
+ #undef WITH_NEXT_FRAMEWORK
+ 
+ /* Define if you want to compile in Python-specific mallocs */
+-#undef WITH_PYMALLOC
++//#undef WITH_PYMALLOC
+ 
+ /* Define if you want to compile in rudimentary thread support */
+ #undef WITH_THREAD
