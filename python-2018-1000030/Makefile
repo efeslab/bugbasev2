@@ -2,8 +2,9 @@ KLEE_BC:=python.bc
 PERF_BC:=python.bc
 SRCDIR:=cpython
 #KLEE_ARGS+=-run-in-dir=build
-APP_ARGS=-unsafe -argv0 build/python $(1)
-REPLAY_ARGS:=-sym-file readahead.py
+APP_ARGS=$(1)
+POSIX_ARGS:=-unsafe -argv0 build/python
+REPLAY_POSIX_ARGS:=-sym-file readahead.py
 SOLVERTIMEOUT:=30s
 ORACLE_KTEST:=klee/oracle.ktest
 ELF_APP:=build/python

@@ -5,7 +5,7 @@ VERSION:=97744701
 # APP_ARGS should be a Makefile function
 NAME:=SQLite-${VERSION}
 APP_ARGS=-init $(word 1, $(1))
-REPLAY_ARGS:=-sym-file test.sqlite
+REPLAY_POSIX_ARGS:=-sym-file test.sqlite
 SOLVERTIMEOUT?=15s
 ORACLE_KTEST:=klee/oracle.ktest
 ELF_APP:=build/sqlite3

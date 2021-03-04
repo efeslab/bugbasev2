@@ -5,7 +5,7 @@ NAME:=SQLite-${VERSION}
 SRCTAR:=${NAME}.tar.gz
 # APP_ARGS should be a Makefile function
 APP_ARGS=-init $(word 1, $(1))
-REPLAY_ARGS:=-sym-file test.sqlite
+REPLAY_POSIX_ARGS:=-sym-file test.sqlite
 ORACLE_KTEST=klee/oracle.ktest
 SOLVERTIMEOUT?=30s
 ELF_APP=${NAME}/build/sqlite3
