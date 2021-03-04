@@ -10,10 +10,9 @@ ORACLE_KTEST:=klee/oracle.ktest
 ELF_APP:=build/python
 INPUT_FILES:=readahead.py
 
-${SRCDIR}:
-${SRCDIR}/configure: ${SRCDIR}
-	git submodule update --init ${SRCDIR}
-	patch -p1 -d ${SRCDIR} < python.klee.patch
+${SRCDIR}/configure:
+	git submodule update --init --checkout -f ${SRCDIR}
+	patch -p1 -N -r - -d ${SRCDIR} < python.klee.patch
 build: ${SRCDIR}/configure
 	mkdir -p build
 	cd build && CXX=wllvm++ CC=wllvm ../${SRCDIR}/configure --disable-profiling --disable-optimizations --disable-toolbox-glue --disable-ipv6 --disable-big-digits--without-valgrind --without-tsc --without-gcc LDFLAGS='-Wl,-no-export-dynamic -static' LINKFORSHARED=" " --disable-shared
@@ -23,6 +22,14 @@ build/%: build;
 python.bc: build/python
 	extract-bc $<
 	cp $<.bc $@
+
+define klee_prerequisite=
+@rm -rf /tmp/readahead.txt
+endef
+CUSTOM_CLEAN:=rm-output
+.PHONY: rm-output
+rm-output:
+	$(klee_prerequisite)
 
 build-clean:
 	rm -rf ${NAME} build ${ALL_BC}

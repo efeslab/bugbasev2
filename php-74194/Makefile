@@ -15,7 +15,7 @@ ${SRCTAR}:
 	wget https://www.php.net/distributions/${SRCTAR}
 ${NAME}: ${SRCTAR}
 	tar xf ${SRCTAR}
-	patch -p1 -d ${NAME} < ${NAME}.klee.patch
+	patch -p1 -N -r - -d ${NAME} < ${NAME}.klee.patch
 build/%: ${NAME}
 	mkdir -p build
 	cd build && CC=wllvm ../${NAME}/configure --disable-all --disable-cgi --without-pcre-jit

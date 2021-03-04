@@ -21,7 +21,7 @@ def parallel_read(fp, threads):
         job.join()
 
 def main():
-    filename = 'readahead.txt'
+    filename = '/tmp/readahead.txt'
 
     with open(filename, 'w') as fp:
         fp.write('A' * 5507453)

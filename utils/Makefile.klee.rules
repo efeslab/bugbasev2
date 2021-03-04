@@ -27,6 +27,8 @@
 ## ENVFILE=%FILE
 ## SOLVER={stp,z3}
 ## ORACLE_KTEST=%FILE
+## klee_prerequisite: a custom makefile canned receipe executed before record/replay.*.klee-out
+## CUSTOM_CLEAN: custom clean targets
 
 
 ###############################################################################
@@ -98,7 +100,7 @@ all-bc: ${ALL_BC}
 er-clean:
 	-rm -rf ${BITCODE_DIR} ${DATAREC_CFG_DIR} record.*.klee-out replay.*.klee-out
 #!# clean: both build-clean and er-clean
-clean: build-clean er-clean
+clean: build-clean er-clean ${CUSTOM_CLEAN}
 
 #!# #############################################
 #!# # The iterative process
@@ -127,6 +129,7 @@ endef
 #!#   empty recording configuration. $i has to be an integer.
 record.%.klee-out: ${BITCODE_DIR}/${BCNAME}.%.bc ${ENVFILE}
 	$(check-dir)
+	$(klee_prerequisite)
 	$(eval KLEE_RECORD_ARGS+=${KLEE_ARGS} \
 	  -save-final-module-path=${BITCODE_DIR}/freq.${BCNAME}.$*.bc -output-dir=$@)
 	cp $< ${RUNTIME_BC}
@@ -136,6 +139,7 @@ record.%.klee-out: ${BITCODE_DIR}/${BCNAME}.%.bc ${ENVFILE}
 #!#   assuming all inputs are unknown. $i has to be an integer.
 replay.%.klee-out: ${BITCODE_DIR}/freq.${BCNAME}.%.bc record.%.klee-out/${TESTCASE}.path ${ENVFILE} ${ORACLE_KTEST}
 	$(check-dir)
+	$(klee_prerequisite)
 	$(eval RECORD_PATH:=$(word 2, $^))
 	$(eval KLEE_REPLAY_ARGS+=${KLEE_ARGS} -oracle-KTest=${ORACLE_KTEST} \
 	  -replay-path=${RECORD_PATH} -output-dir=$@)
@@ -199,8 +203,11 @@ verify: record.1.klee-out/${TESTCASE}.path record.check.klee-out
 	@echo "##########################################################"
 	@pathviewer -dump $(word 1, $^) > oracle.path.log
 	@pathviewer -dump record.check.klee-out/${TESTCASE}.path > er.path.log
-	@if diff -u oracle.path.log er.path.log; then \
+	@if cmp -s oracle.path.log er.path.log; then \
 	   echo "Same control flow verified"; \
+	 else \
+	   echo "Control flow mismatches"; \
+	   echo 'Use "diff -u oracle.path.log er.path.log" to see differences'; \
 	 fi
 	@rm -rf oracle.path.log er.path.log
 record.check.klee-out: ${BITCODE_DIR}/${BCNAME}.1.bc ${ENVFILE} ${ER_GENERATED_INPUT}
