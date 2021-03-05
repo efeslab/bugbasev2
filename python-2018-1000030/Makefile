@@ -18,6 +18,7 @@ build: ${SRCDIR}/configure
 	cd build && CXX=wllvm++ CC=wllvm ../${SRCDIR}/configure --disable-profiling --disable-optimizations --disable-toolbox-glue --disable-ipv6 --disable-big-digits--without-valgrind --without-tsc --without-gcc LDFLAGS='-Wl,-no-export-dynamic -static' LINKFORSHARED=" " --disable-shared
 	cp Setup.local build/Modules/Setup.local
 	make -C build -j`nproc`
+	build/python readahead.py || true
 build/%: build;
 python.bc: build/python
 	extract-bc $<
